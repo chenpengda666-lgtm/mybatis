@@ -2,6 +2,11 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- 扫描实体包，mapper 里就可以直接写 Orders/Users 这样的短别名。
+         注意：typeAliases 必须写在 environments 之前，顺序由 DTD 强制。 -->
+    <typeAliases>
+        <package name="com.aaa.entity"/>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC" />
@@ -15,5 +20,9 @@
     </environments>
     <mappers>
         <mapper resource="UsersMapper.xml"/>
+        <mapper resource="OrdersMapper.xml"/>
+        <mapper resource="ClazzMapper.xml"/>
+        <mapper resource="EmployeeDao.xml"/>
     </mappers>
+
 </configuration>

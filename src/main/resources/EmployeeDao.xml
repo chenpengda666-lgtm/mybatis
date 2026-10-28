@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:命令空间。现在可以随便起名。
+后续需要和dao的名称一致。
+-->
+<mapper namespace="com.aaa.dao.EmployeeDao">
+
+<resultMap id="EmployeeMapper" type="Employee" autoMapping="true">
+    <id property="empId" column="emp_id"/>
+    <result property="empName" column="emp_name"/>
+    <result property="hiredate" column="hire_date"/>
+</resultMap>
+<!--where+if结合:
+where: 如果有条件 会自动添加where关键字，并把第一个and或or去除。
+
+select * from employee where  emp_name=? and dept=?
+-->
+
+    <!--查询-->
+<select id="selectByCondition" resultMap="EmployeeMapper">
+    select * from employee
+    <where>
+        <if test="empName!=null and empName!=''">
+            and emp_name = #{empName}
+        </if>
+        <if test="dept!=null and dept!=''">
+            and dept =#{dept}
+        </if>
+    </where>
+</select>
+
+<!--删除-->
+<delete id="batchDelete">
+    delete from employee where emp_id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+</delete>
+
+
+    <!--增加-->
+    <insert id="batchAdd">
+        insert into employee(emp_name,dept,gender,age) values
+        <foreach collection="list" item="emp" separator=",">
+            (#{emp.empName},#{emp.dept},#{emp.gender},#{emp.age})
+        </foreach>
+    </insert>
+
+    <!--修改-->
+    <update id="updateByCondition">
+        update employee
+        <set>
+            <if test="empName != null and empName != ''">
+                emp_name = #{empName},
+            </if>
+            <if test="dept != null and dept != ''">
+                dept = #{dept},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="age != null">
+                age = #{age}
+            </if>
+        </set>
+        where emp_id = #{empId}
+    </update>
+</mapper>
