@@ -4,13 +4,48 @@
 <!--namespace:命令空间。现在可以随便起名。
 后续需要和dao的名称一致。
 -->
+
 <mapper namespace="com.aaa.dao.EmployeeDao">
+
+
+    <cache
+    eviction="FIFO"
+    flushInterval="60000"
+    size="512"
+    readOnly="true"
+    />
+
+
+    <!--
+plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
+properties?, settings?,
+typeAliases?, typeHandlers?,
+objectFactory?,objectWrapperFactory?,
+plugins?,
+environments?, databaseIdProvider?, mappers?
+-->
+
 
 <resultMap id="EmployeeMapper" type="Employee" autoMapping="true">
     <id property="empId" column="emp_id"/>
     <result property="empName" column="emp_name"/>
     <result property="hiredate" column="hire_date"/>
 </resultMap>
+
+    <!--分页-->
+    <select id="selectPage" resultMap="EmployeeMapper">
+        select * from employee
+    </select>
+
+        <select id="selectByName" resultMap="EmployeeMapper">
+            select * from employee where emp_name = '${name}'
+        </select>
+
+
+
+    <select id="selectById" resultMap="EmployeeMapper">
+        select * from employee where emp_id = #{id}
+    </select>
 <!--where+if结合:
 where: 如果有条件 会自动添加where关键字，并把第一个and或or去除。
 
@@ -64,6 +99,16 @@ select * from employee where  emp_name=? and dept=?
                 age = #{age}
             </if>
         </set>
+
+
+
+
         where emp_id = #{empId}
+
+
+
     </update>
+
+
+
 </mapper>

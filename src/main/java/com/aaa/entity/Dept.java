@@ -3,11 +3,11 @@ package com.aaa.entity;
 /**
  * 表示部门的实体类（对应 day02.dept 表）
  */
-public class Dept {
+public class Dept  {
     private Integer id;
     private String name;
 
-    public Dept() {
+    public Dept(int i, String 开发部, String 上海) {
     }
 
     public Dept(Integer id, String name) {

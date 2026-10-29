@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class DeptDao {
 
+
     /** 新增部门，返回影响行数 */
     public int insert(String name) {
         String sql = "insert into dept(name) values(?)";
@@ -89,7 +90,7 @@ public class DeptDao {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Dept d = new Dept();
+                Dept d = new Dept(101,"开发部","上海");
                 d.setId(rs.getInt("id"));
                 d.setName(rs.getString("name"));
                 depts.add(d);
@@ -99,4 +100,5 @@ public class DeptDao {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 必须和接口全类名一致 -->
+<mapper namespace="com.aaa.dao.DeptMapper">
+    <select id="queryById" resultType="com.aaa.entity.Dept">
+        select id, name from dept where id = #{id}
+    </select>
+    <update id="update">
+        update dept set name = #{name} where id = #{id}
+    </update>
+</mapper>

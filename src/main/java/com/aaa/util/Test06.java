@@ -66,5 +66,8 @@ public class Test06 {
         System.out.println("修改行数："+rows);
         session.commit(); // 修改必须提交事务！
         session.close();
+
+
+
     }
 }
